@@ -1,0 +1,103 @@
+---
+layout: default
+---
+
+<article class="post">
+    <header class="post-header">
+        <div class="post-meta">
+            <span class="post-category">
+                <a href="{{ '/categories/' | append: page.categories.first | append: '/' | relative_url }}">
+                    <i class="fas fa-tag"></i> {{ page.categories.first | capitalize }}
+                </a>
+            </span>
+            <span class="post-date">
+                <i class="fas fa-calendar"></i> {{ page.date | date: "%B %d, %Y" }}
+            </span>
+            {% if page.read_time %}
+            <span class="post-read-time">
+                <i class="fas fa-clock"></i> {{ page.read_time }} min read
+            </span>
+            {% endif %}
+        </div>
+        
+        <h1 class="post-title">{{ page.title }}</h1>
+        
+        {% if page.excerpt %}
+        <p class="post-excerpt">{{ page.excerpt }}</p>
+        {% endif %}
+        
+        <div class="post-authors">
+            {% if page.author == 'both' %}
+                <div class="author-info">
+                    <img src="{{ '/assets/images/authors/couple.jpg' | relative_url }}" alt="Both Authors" class="author-avatar">
+                    <span>By Both of Us</span>
+                </div>
+            {% else %}
+                {% assign author = site.authors | where: "slug", page.author | first %}
+                {% if author %}
+                <div class="author-info">
+                    <img src="{{ author.avatar | relative_url }}" alt="{{ author.name }}" class="author-avatar">
+                    <span>By {{ author.name }}</span>
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </header>
+
+    {% if page.featured_image %}
+    <div class="post-featured-image">
+        <img src="{{ page.featured_image | relative_url }}" alt="{{ page.title }}" />
+    </div>
+    {% endif %}
+
+    <div class="post-content">
+        {{ content }}
+    </div>
+
+    <footer class="post-footer">
+        {% if page.tags and page.tags.size > 0 %}
+        <div class="post-tags">
+            <h4>Tags:</h4>
+            {% for tag in page.tags %}
+            <span class="tag">#{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <div class="post-share">
+            <h4>Share this post:</h4>
+            <div class="share-buttons">
+                <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url }}" target="_blank" class="share-btn twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" target="_blank" class="share-btn facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://pinterest.com/pin/create/button/?url={{ site.url }}{{ page.url }}&description={{ page.title | url_encode }}" target="_blank" class="share-btn pinterest">
+                    <i class="fab fa-pinterest"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</article>
+
+<section class="related-posts">
+    <h3>You might also like</h3>
+    <div class="related-posts-grid">
+        {% assign related_posts = site.related_posts | limit: 3 %}
+        {% for post in related_posts %}
+        <article class="related-post-card">
+            {% if post.featured_image %}
+            <div class="related-post-image">
+                <img src="{{ post.featured_image | relative_url }}" alt="{{ post.title }}">
+            </div>
+            {% endif %}
+            <div class="related-post-content">
+                <span class="related-post-category">{{ post.categories.first | capitalize }}</span>
+                <h4><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h4>
+                <p class="related-post-date">{{ post.date | date: "%B %d, %Y" }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>

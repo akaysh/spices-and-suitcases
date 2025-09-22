@@ -1,0 +1,65 @@
+---
+layout: default
+---
+
+<header class="category-header">
+    <h1 class="category-title">{{ page.title }}</h1>
+    <p class="category-description">{{ page.description }}</p>
+</header>
+
+<div class="posts-grid">
+    {% assign category_posts = site.posts | where: "categories", page.category %}
+    {% for post in category_posts %}
+    <article class="post-card">
+        {% if post.featured_image %}
+        <div class="post-card-image">
+            <img src="{{ post.featured_image | relative_url }}" alt="{{ post.title }}">
+            <span class="post-card-category">{{ post.categories.first | capitalize }}</span>
+        </div>
+        {% endif %}
+        <div class="post-card-content">
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+            <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+            <div class="post-card-meta">
+                <span><i class="fas fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
+                {% if post.read_time %}
+                <span><i class="fas fa-clock"></i> {{ post.read_time }} min read</span>
+                {% endif %}
+                {% if post.author != 'both' %}
+                    {% assign author = site.authors | where: "slug", post.author | first %}
+                    {% if author %}
+                    <span><i class="fas fa-user"></i> {{ author.name }}</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+{% if category_posts.size == 0 %}
+<div class="no-posts">
+    <h3>No posts yet in this category</h3>
+    <p>We're working on some amazing content for this category. Check back soon!</p>
+    <a href="{{ '/' | relative_url }}" class="btn btn-primary">Explore Other Categories</a>
+</div>
+{% endif %}
+
+<style>
+.no-posts {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--background-cream);
+    border-radius: var(--border-radius);
+}
+
+.no-posts h3 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.no-posts p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+</style>

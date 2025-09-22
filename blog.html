@@ -1,0 +1,83 @@
+---
+layout: default
+title: "All Posts"
+---
+
+<div class="page-header">
+    <h1 class="page-title">All Posts</h1>
+    <p class="page-subtitle">Every adventure, recipe, tip, and story we've shared</p>
+</div>
+
+<div class="posts-grid">
+    {% for post in paginator.posts %}
+    <article class="post-card">
+        {% if post.featured_image %}
+        <div class="post-card-image">
+            <img src="{{ post.featured_image | relative_url }}" alt="{{ post.title }}">
+            <span class="post-card-category">{{ post.categories.first | capitalize }}</span>
+        </div>
+        {% endif %}
+        <div class="post-card-content">
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+            <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+            <div class="post-card-meta">
+                <span><i class="fas fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
+                {% if post.read_time %}
+                <span><i class="fas fa-clock"></i> {{ post.read_time }} min read</span>
+                {% endif %}
+                {% if post.author != 'both' %}
+                    {% assign author = site.authors | where: "slug", post.author | first %}
+                    {% if author %}
+                    <span><i class="fas fa-user"></i> {{ author.name }}</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+    {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path | relative_url }}" class="btn btn-secondary">
+            <i class="fas fa-chevron-left"></i> Previous
+        </a>
+    {% endif %}
+    
+    <span class="pagination-info">
+        Page {{ paginator.page }} of {{ paginator.total_pages }}
+    </span>
+    
+    {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path | relative_url }}" class="btn btn-secondary">
+            Next <i class="fas fa-chevron-right"></i>
+        </a>
+    {% endif %}
+</div>
+{% endif %}
+
+<style>
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3rem 0;
+    padding: 2rem;
+    background: var(--background-cream);
+    border-radius: var(--border-radius);
+}
+
+.pagination-info {
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .pagination {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+</style>

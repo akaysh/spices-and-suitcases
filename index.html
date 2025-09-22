@@ -1,0 +1,146 @@
+---
+layout: default
+---
+
+<section class="hero">
+    <h1>{{ site.title }}</h1>
+    <p>{{ site.description }}</p>
+    <div class="cta-buttons">
+        <a href="#recent-posts" class="btn btn-primary">Read Our Stories</a>
+        <a href="{{ '/about/' | relative_url }}" class="btn btn-secondary">Meet Us</a>
+    </div>
+</section>
+
+<section class="authors-section">
+    <h2 class="text-center">Meet the Adventurers</h2>
+    <div class="authors-grid">
+        <div class="author-card">
+            <img src="{{ '/assets/images/authors/him.jpg' | relative_url }}" alt="The Chef" class="author-avatar">
+            <h3>The Chef</h3>
+            <p class="author-role">Gourmet Enthusiast & Thrill Seeker</p>
+            <p>Always hunting for the perfect spice blend and the next adrenaline rush. Believes that the best meals come from the most unexpected places, and that life is too short for bland food or boring adventures.</p>
+        </div>
+        <div class="author-card">
+            <img src="{{ '/assets/images/authors/her.jpg' | relative_url }}" alt="The Organizer" class="author-avatar">
+            <h3>The Organizer</h3>
+            <p class="author-role">Street Food Lover & Homebody</p>
+            <p>Master of finding the best hole-in-the-wall eateries and creating cozy spaces. Believes that home is where the heart is, but the heart can be anywhere with good street food and proper planning.</p>
+        </div>
+    </div>
+</section>
+
+<section class="posts-section" id="recent-posts">
+    <h2>Latest Adventures</h2>
+    <div class="posts-grid">
+        {% assign recent_posts = site.posts | limit: 6 %}
+        {% for post in recent_posts %}
+        <article class="post-card">
+            {% if post.featured_image %}
+            <div class="post-card-image">
+                <img src="{{ post.featured_image | relative_url }}" alt="{{ post.title }}">
+                <span class="post-card-category">{{ post.categories.first | capitalize }}</span>
+            </div>
+            {% endif %}
+            <div class="post-card-content">
+                <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+                <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+                <div class="post-card-meta">
+                    <span><i class="fas fa-calendar"></i> {{ post.date | date: "%B %d, %Y" }}</span>
+                    {% if post.read_time %}
+                    <span><i class="fas fa-clock"></i> {{ post.read_time }} min read</span>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center">
+        <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">View All Posts</a>
+    </div>
+</section>
+
+<section class="categories-section">
+    <h2 class="text-center">Explore Our World</h2>
+    <div class="categories-grid">
+        {% for category in site.categories %}
+        {% assign category_posts = site.posts | where: "categories", category %}
+        <div class="category-card">
+            <div class="category-icon">
+                {% case category %}
+                {% when 'travel' %}
+                    <i class="fas fa-plane"></i>
+                {% when 'cooking' %}
+                    <i class="fas fa-utensils"></i>
+                {% when 'organizing' %}
+                    <i class="fas fa-list-check"></i>
+                {% when 'planning' %}
+                    <i class="fas fa-calendar-check"></i>
+                {% when 'finance' %}
+                    <i class="fas fa-piggy-bank"></i>
+                {% when 'reading' %}
+                    <i class="fas fa-book-open"></i>
+                {% else %}
+                    <i class="fas fa-heart"></i>
+                {% endcase %}
+            </div>
+            <h3>{{ category | capitalize }}</h3>
+            <p class="category-count">{{ category_posts.size }} posts</p>
+            <a href="{{ '/categories/' | append: category | append: '/' | relative_url }}" class="btn btn-secondary">Explore</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+.categories-section {
+    margin: 4rem 0;
+    padding: 3rem 0;
+    background: var(--background-cream);
+    border-radius: var(--border-radius);
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 0 2rem;
+}
+
+.category-card {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.category-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.category-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.category-count {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.category-card .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+}
+</style>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    
+    <!-- SEO -->
+    {% seo %}
+    
+    <!-- Feed -->
+    {% feed_meta %}
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="{{ '/' | relative_url }}" class="nav-logo">
+                    <h1>{{ site.title }}</h1>
+                    <p>{{ site.subtitle }}</p>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="{{ '/' | relative_url }}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link">Categories <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            {% for category in site.categories %}
+                            <li><a href="{{ '/categories/' | append: category | append: '/' | relative_url }}">{{ category | capitalize }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ '/about/' | relative_url }}" class="nav-link">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ '/contact/' | relative_url }}" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        {{ content }}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>{{ site.title }}</h3>
+                <p>{{ site.description | truncate: 100 }}</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul class="footer-links">
+                    {% for category in site.categories %}
+                    <li><a href="{{ '/categories/' | append: category | append: '/' | relative_url }}">{{ category | capitalize }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    {% if site.social.instagram %}
+                    <a href="https://instagram.com/{{ site.social.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                    {% endif %}
+                    {% if site.social.twitter %}
+                    <a href="https://twitter.com/{{ site.social.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                    {% endif %}
+                    {% if site.social.pinterest %}
+                    <a href="https://pinterest.com/{{ site.social.pinterest }}" target="_blank"><i class="fab fa-pinterest"></i></a>
+                    {% endif %}
+                    {% if site.social.email %}
+                    <a href="mailto:{{ site.social.email }}"><i class="fas fa-envelope"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. Made with <i class="fas fa-heart"></i> and Jekyll.</p>
+        </div>
+    </footer>
+
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+# Site settings
+title: "Spices & Suitcases"
+subtitle: "A Publishing Corner for Life's Adventures"
+description: "We're a couple who couldn't be more different—he's a gourmet chef, she's all about street food; he's a thrill-seeker, she's a homebody. But together, we're on a mission to prove that opposites not only attract, they also cook and travel pretty darn well. Follow us as we wander the world one meal at a time (and probably argue over the spice level while we're at it)!"
+baseurl: ""
+url: "https://yourusername.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:categories/:title/
+
+# Pagination
+paginate: 6
+paginate_path: "/page:num/"
+
+# Collections
+collections:
+  authors:
+    output: true
+    permalink: /authors/:name/
+
+# Categories
+categories:
+  - travel
+  - organizing
+  - planning
+  - finance
+  - cooking
+  - reading
+
+# Social links
+social:
+  instagram: "your_instagram"
+  twitter: "your_twitter"
+  pinterest: "your_pinterest"
+  email: "your_email@example.com"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "both"
+  - scope:
+      path: ""
+      type: "authors"
+    values:
+      layout: "author"
