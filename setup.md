@@ -22,8 +22,8 @@ social:
 
 ### Update Author Information
 Edit the files in `_authors/` directory:
-- `_authors/him.md` - Update with his information
 - `_authors/her.md` - Update with her information
+- `_authors/him.md` - Update with his information
 
 ### Add Your Photos
 Add photos to `assets/images/authors/`:
